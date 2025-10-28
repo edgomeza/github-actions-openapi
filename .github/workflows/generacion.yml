@@ -1,0 +1,31 @@
+name: Generacion
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generar-codigo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Generate code from OpenAPI
+        run: java -jar openapi-generator-cli.jar generate -i api.yaml -g python-flask -o ./openapi_server
+
+      - name: Compress generated code
+        run: zip -r openapi_server.zip openapi_server
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openapi_server
+          path: openapi_server.zip
