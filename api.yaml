@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Mi Microservicio
+  version: 1.0.0
+  description: Especificación de mi microservicio ASEE
+paths:
+  /hello:
+    get:
+      summary: Saludo
+      responses:
+        '200':
+          description: Saludo exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
